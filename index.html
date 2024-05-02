@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siobhan's Website</title>
+
+    <script>
+        const { EmailClient } = require("@azure/communication-email");
+
+        // This code retrieves your connection string from an environment variable.
+        const connectionString = "endpoint=https://cog-siobhan-communication-service.unitedstates.communication.azure.com/;accesskey=d/3Kj57MaJ9PihMvBWqFTMbX1xFzTmrM/qJiVxLh5NFwoFKzMFTxMvVc5X0P/Nnd/jgWqsUsbDD1VpSruJYdDg==";
+        const client = new EmailClient(connectionString);
+
+        async function main() {
+            const emailMessage = {
+                senderAddress: "DoNotReply@37e20031-d46a-4863-b2d0-e78964ddbcab.azurecomm.net",
+                content: {
+                    subject: "Test Email",
+                    plainText: "Hello world via email.",
+                },
+                recipients: {
+                    to: [{ address: "dwjones32@gmail.com" }],
+                },
+            };
+
+            const poller = await client.beginSend(emailMessage);
+            const result = await poller.pollUntilDone();
+        }
+    </script>
+</head>
+<body>
+
+    <div style="font-size: large; font-weight: bold;">
+        SIOBHAN'S WEBSITE
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <button onclick="main()">Click to email</button>
+    </div>
+
+</body>
+</html>
